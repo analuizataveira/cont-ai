@@ -1,7 +1,7 @@
 import request from "supertest";
-import { Record, TransactionType } from "../entities/Records";
-import { AppDataSource } from "../database/data-source";
 import app from "../app";
+import { AppDataSource } from "../database/data-source";
+import { Record, TransactionType } from "../entities/Records";
 
 const repo = AppDataSource.getRepository(Record);
 
