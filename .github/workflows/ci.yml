@@ -10,6 +10,7 @@ on:
 jobs:
   test-backend:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:15
@@ -27,10 +28,9 @@ jobs:
 
     defaults:
       run:
-        working-directory: backend
+        working-directory: backend/cont-ai  # Ajuste para o caminho correto do seu package.json
 
     env:
-      # Mantém as variáveis coerentes com seu data source
       DB_HOST: localhost
       DB_PORT: 5432
       DB_USERNAME: postgres
@@ -49,11 +49,8 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v3
         with:
-          path: backend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('backend/package.json') }}
-
-      - name: Install dependencies
-        run: npm install
+          path: backend/cont-ai/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('backend/cont-ai/package.json') }}
 
       - name: Wait for Postgres to be ready
         run: |
@@ -63,11 +60,23 @@ jobs:
             sleep 5
           done
 
+      # --- ETAPA 2: Instalar dependências e subir API ---
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the backend (se necessário)
+        run: npm run build
+
+      - name: Start backend server in background
+        run: npm run start &
+
+      # --- ETAPA 3: Executar os testes ---
       - name: Run tests
         run: npm test
 
+      # --- Upload do relatório de testes ---
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: ./backend/src/test-report/report.html
+          path: ./backend/cont-ai/src/test-report/report.html
