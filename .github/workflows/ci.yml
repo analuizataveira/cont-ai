@@ -28,7 +28,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: backend/cont-ai  
+        working-directory: backend/cont-ai
 
     env:
       DB_HOST: localhost
@@ -49,7 +49,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: backend/cont-ai/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('backend/cont-ai/package.json') }}
 
       - name: Install dependencies
@@ -63,11 +63,14 @@ jobs:
             sleep 5
           done
 
+      - name: Fix permissions on jest binary
+        run: chmod -R 755 node_modules/.bin
+
       - name: Start API in background
         run: npm run dev &
-
+      
       - name: Run tests
-        run: npm test
+        run: npx jest --runInBand
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
