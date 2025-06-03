@@ -1,8 +1,11 @@
 'use client'
 
 import Navbar from "../components/Navbar"
+import { useState } from "react"
 
 export default function Home() {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     return (
         <div className="bg-white h-screen overflow-hidden">
             <Navbar />
@@ -35,9 +38,12 @@ export default function Home() {
                             >
                                 Registros
                             </a>
-                            <a href="/features" className="text-sm font-semibold text-gray-900">
+                            <button 
+                                onClick={() => setIsModalOpen(true)} 
+                                className="text-sm font-semibold text-gray-900 hover:text-indigo-600 transition-colors"
+                            >
                                 Saiba mais <span aria-hidden="true">→</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -65,6 +71,71 @@ export default function Home() {
                     </div>
                 </div>
 
+                {isModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+                        <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                            <div className="p-6">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-2xl font-bold text-gray-900">Como usar o sistema</h3>
+                                    <button 
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="text-gray-500 hover:text-gray-700"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                
+                                <div className="space-y-6">
+                                    <div className="border-l-4 border-indigo-500 pl-4 py-2">
+                                        <h4 className="font-semibold text-lg">1. Cadastro e Login</h4>
+                                        <p className="mt-1 text-gray-600">
+                                            Primeiro, crie sua conta ou faça login se já tiver uma. Seus dados serão armazenados com segurança.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="border-l-4 border-indigo-500 pl-4 py-2">
+                                        <h4 className="font-semibold text-lg">2. Adicionar Lançamentos</h4>
+                                        <p className="mt-1 text-gray-600">
+                                            Na página de Registros, você pode adicionar novos lançamentos financeiros, classificando-os como receitas ou despesas.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="border-l-4 border-indigo-500 pl-4 py-2">
+                                        <h4 className="font-semibold text-lg">3. Visualização Mensal</h4>
+                                        <p className="mt-1 text-gray-600">
+                                            Seus lançamentos são automaticamente organizados por mês, facilitando o acompanhamento do seu fluxo financeiro.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="border-l-4 border-indigo-500 pl-4 py-2">
+                                        <h4 className="font-semibold text-lg">4. Relatórios</h4>
+                                        <p className="mt-1 text-gray-600">
+                                            Acesse relatórios detalhados que mostram seus gastos por categoria, comparação entre meses e projeções futuras.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="border-l-4 border-indigo-500 pl-4 py-2">
+                                        <h4 className="font-semibold text-lg">5. Tomada de Decisão</h4>
+                                        <p className="mt-1 text-gray-600">
+                                            Utilize os dados organizados para tomar decisões estratégicas sobre seus gastos e investimentos.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-8 flex justify-end">
+                                    <button
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                                    >
+                                        Entendi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <div
                     aria-hidden="true"
                     className="absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl"

@@ -7,32 +7,32 @@ import WarningModal from "../../components/WarningModal";
 import RecordInfo from "./RecordInfo";
 import RecordForm from "./RecordForm";
 import Navbar from "../../components/Navbar";
-import { getAllRecords, remove } from "../../services/RecordServices";
+import { getAllRecords, getGroupedRecords, getLiteralType, remove } from "../../services/RecordServices";
+import { GroupedRecords } from "../../interfaces/GroupedRecords";
 
 export default function RecordList() {
     const [recordInfo, setRecordInfo] = useState<Record>({} as Record);
-
     const [recordInfoModalOpen, setRecordInfoModalOpen] = useState<boolean>(false);
     const [recordModalOpen, setRecordModalOpen] = useState<boolean>(false);
-
     const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
     const [records, setRecords] = useState<Array<Record>>([]);
-
     const [warningModalAction, setWarningModalAction] = useState<"delete" | "restart" | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [groupedRecords, setGroupedRecords] = useState<GroupedRecords[]>([]);
 
-    //Controla a máscara de carregamento
-    const [loading, setLoading] = useState(false)
+
 
     const refreshRecords = async () => {
-        setLoading(true)
-        await getAllRecords().then((recordList) => {
-            setRecords(recordList != null ? recordList : []);
-            setTimeout(() => setLoading(false), 100)
-        })
+        setLoading(true);
+        await getGroupedRecords().then((groupedRecords) => {
+            setGroupedRecords(groupedRecords != null ? groupedRecords : []);
+            setTimeout(() => setLoading(false), 100);
+        });
     };
 
+
     useEffect(() => {
-        refreshRecords()
+        refreshRecords();
     }, []);
 
     const handleDelete = async () => {
@@ -46,14 +46,14 @@ export default function RecordList() {
 
     const handleSubmit = () => {
         setTimeout(async () => {
-            await refreshRecords()
-        }, 100)
+            await refreshRecords();
+        }, 100);
         setRecordModalOpen(false);
         setRecordInfoModalOpen(false);
     };
 
     const openForm = (record: Record) => {
-        setRecordInfo(record);   // seta o novo
+        setRecordInfo(record);
         setRecordModalOpen(true);
     };
 
@@ -67,12 +67,20 @@ export default function RecordList() {
             <Navbar />
             <div className="h-full px-12 py-8">
                 <div className="flex justify-between space-x-2 mb-4">
-                    <h1 className="text-4xl font-bold text-left">Accounting Records</h1>
+                    <h1 className="text-4xl font-bold text-left"> Lançamentos financeiros</h1>
                     <div>
-                        <button onClick={() => openForm({} as Record)} className="mr-5 btn btn-xl">
+                        <button
+                            onClick={() => openForm({} as Record)}
+                            className="mr-5 btn btn-xl"
+                        >
                             Criar
                         </button>
-                        <button onClick={async () => { await refreshRecords() }} className="mr-5 btn btn-xl">
+                        <button
+                            onClick={async () => {
+                                await refreshRecords();
+                            }}
+                            className="mr-5 btn btn-xl"
+                        >
                             Atualizar
                         </button>
                     </div>
@@ -81,32 +89,59 @@ export default function RecordList() {
                 {loading ? (
                     <span className="loading loading-lg loading-ring absolute top-1/2 left-1/2"></span>
                 ) : (
-                    <div className="overflow-y-auto h-[90%]">
-                        <table className="table table-fixed shadow-sm">
-                            <thead className="text-xl bg-base-200">
-                                <tr>
-                                    <th className="w-32 rounded-tl-xl"></th>
-                                    <th>Date</th>
-                                    <th className="w-[350px]">Description</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {records?.map((record) => (
-                                    <tr className="cursor-pointer" key={record.id} onClick={() => openRecordDetails(record)}>
-                                        <th>{record.id}</th>
-                                        <td>{record.date}</td>
-                                        <td>{record.description}</td>
-                                        <td>{record.amount}</td>
-                                        <td>{record.type}</td>
-                                    </tr>
+                    <>
+                        {groupedRecords.length === 0 ? (
+                            <div className="flex justify-center items-center w-full h-2xl">
+                                <p className="text-sm text-gray-500 mt-2">
+                                    Nenhum registro encontrado
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="overflow-y-auto h-[90%] space-y-8">
+                                {groupedRecords.map((group) => (
+                                    <div key={group.monthYear} className="bg-base-100 p-4 rounded-xl shadow-md">
+                                        <h2 className="text-2xl font-semibold mb-2">{group.monthYear}</h2>
+                                        <p className="text-sm text-gray-500 mb-4">
+                                            Total Crédito: R${group.totalCredit} | Total Débito: R${group.totalDebit}
+                                        </p>
+
+                                        <table className="table table-fixed w-full shadow-sm" >
+                                            <thead className="text-md bg-base-200">
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Descrição</th>
+                                                    <th>Valor (R$)</th>
+                                                    <th>Tipo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {group.records.map((record) => (
+                                                    <tr
+                                                        className="cursor-pointer"
+                                                        key={record.id}
+                                                        onClick={() => openRecordDetails(record)}
+                                                    >
+                                                        <td>{record.date}</td>
+                                                        <td>{record.description}</td>
+                                                        <td>R${record.amount}</td>
+                                                        <td>{getLiteralType(record.type)}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 ))}
-                            </tbody>
-                        </table>
+                            </div>
+
+                        )}
 
                         {/* Modal for record details */}
-                        <Modal modalId="record_info_modal" width="w-[385px]" isOpen={recordInfoModalOpen} onCloseClick={() => setRecordInfoModalOpen(false)}>
+                        <Modal
+                            modalId="record_info_modal"
+                            width="w-[385px]"
+                            isOpen={recordInfoModalOpen}
+                            onCloseClick={() => setRecordInfoModalOpen(false)}
+                        >
                             <RecordInfo
                                 onEditClick={(record: Record) => openForm(record)}
                                 onDeleteClick={() => setWarningModalAction("delete")}
@@ -125,24 +160,27 @@ export default function RecordList() {
                                 }}
                                 onDenyClick={() => setWarningModalAction(null)}
                             >
-                                Tem certeza que deseja deletar este servidor?
+                                Tem certeza que deseja deletar este lançamento?
                             </WarningModal>
                         )}
 
                         {/* Create/Edit Modal */}
-                        <Modal width="w-[490px]" modalId="record_form_modal" isOpen={recordModalOpen} onCloseClick={() => setRecordModalOpen(false)}>
+                        <Modal
+                            width="w-[490px]"
+                            modalId="record_form_modal"
+                            isOpen={recordModalOpen}
+                            onCloseClick={() => setRecordModalOpen(false)}
+                        >
                             <RecordForm
-                                key={recordInfo.id ?? 'new'} // força re-render
-                                recordId={recordInfo.id ?? 0} // ou talvez até evitar passar se for novo
+                                key={recordInfo.id}
+                                recordId={recordInfo.id as number}
                                 isClose={!recordModalOpen}
                                 isEditing={recordInfo.id !== undefined}
                                 onSubmit={handleSubmit}
                                 onCancel={() => setRecordModalOpen(false)}
                             />
-
                         </Modal>
-
-                    </div>
+                    </>
                 )}
             </div>
         </div>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Record } from '../../interfaces/Record';
 import { IoTrashBinSharp } from 'react-icons/io5';
-import { getById } from '../../services/RecordServices';
+import { getById, getLiteralType } from '../../services/RecordServices';
 
 interface RecordInfoProps {
     recordId: number;
@@ -43,10 +43,10 @@ export default function RecordInfo(recordInfoProps: RecordInfoProps) {
                 ) : (
                     <>
                         <p><strong>ID:</strong> {recordInfo.id}</p>
-                        <p><strong>Date:</strong> {recordInfo.date}</p>
-                        <p><strong>Date:</strong> {recordInfo.description}</p>
-                        <p><strong>Amout:</strong> {recordInfo.amount}</p>
-                        <p><strong>Type:</strong> {recordInfo.type}</p>
+                        <p><strong>Data:</strong> {recordInfo.date}</p>
+                        <p><strong>Descrição:</strong> {recordInfo.description}</p>
+                        <p><strong>Valor:</strong> R${recordInfo.amount}</p>
+                        <p><strong>Tipo:</strong> {getLiteralType(recordInfo.type)}</p>
                         <div className="flex justify-end mt-4">
                             <button className="btn btn-active mr-2  hover:outline hover:outline-neutral-500 hover:outline-1" onClick={() => recordInfoProps.onEditClick(recordInfo)}>
                                 Editar

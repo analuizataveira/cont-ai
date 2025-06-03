@@ -1,5 +1,6 @@
 import { API_HOST } from "../constants/Api";
-import { Record } from "../interfaces/Record";
+import { GroupedRecords } from "../interfaces/GroupedRecords";
+import { Record, TYPE_CREDIT, TYPE_DEBIT } from "../interfaces/Record";
 
 
 
@@ -68,4 +69,24 @@ export async function getAllRecords(): Promise<Array<Record>> {
     }
 
     return await response.json();
+}
+
+// Function to get grouped records
+export async function getGroupedRecords(): Promise<GroupedRecords[]> {
+    const response = await fetch(`${API_HOST}/api/records/grouped/by-month`);
+
+    if (!response.ok) {
+        const error = await response.text();
+        throw new Error(JSON.parse(error)?.error);
+    }
+
+    return await response.json();
+}
+
+
+export function getLiteralType (type: number) {
+
+    if (type == TYPE_CREDIT.value) return TYPE_CREDIT.desc; 
+    if (type == TYPE_DEBIT.value) return TYPE_DEBIT.desc;
+
 }

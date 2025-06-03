@@ -1,9 +1,9 @@
+import { format, parse } from "date-fns";
 import { useEffect, useState } from 'react';
-import { Record, TransactionType, TYPE_CREDIT, TYPE_DEBIT } from '../../interfaces/Record';
-import { getById, save, update } from '../../services/RecordServices';
 import DatePicker from "react-datepicker";
-import { parse, format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
+import { Record, TYPE_CREDIT, TYPE_DEBIT } from '../../interfaces/Record';
+import { getById, save, update } from '../../services/RecordServices';
 
 
 type RecordFormProps = {
@@ -17,7 +17,7 @@ type RecordFormProps = {
 }
 
 const RecordForm = (recordFormProps: RecordFormProps) => {
-    const [id, setId] = useState<number | undefined>(undefined);
+    const [id, setId] = useState<number | null>(null);
     const [date, setDate] = useState('');
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState<number>(0);
@@ -30,7 +30,7 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
             description: description,
             amount: amount,
             type: type,
-        };
+        } as Record;
 
         if (!record.id) {
             await save(record).then(() => recordFormProps.onSubmit());
@@ -47,27 +47,27 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
                 setDate(record.date ?? '');
                 setDescription(record.description ?? '');
                 setAmount(record.amount ?? 0);
-                setType(record.type ?? TransactionType.CREDIT);
+                setType(record.type ?? 0);
             }
         }
 
         if (recordFormProps.isEditing) {
             loadRecord();
         } else if (!recordFormProps.isEditing || recordFormProps.isClose) {
-            setId(undefined);
+            setId(null);
             setDate('');
             setDescription('');
             setAmount(0);
-            setType(TransactionType.CREDIT);
+            setType(3);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordFormProps.isClose]);
 
     return (
         <div className="w-full">
-            <form className="p-6 rounded-xl bg-base-100 shadow-md space-y-4">
+            <form className="p-6 rounded-xl bg-base-100 ">
                 <h2 className="text-2xl font-bold mb-4 text-center">
-                    {recordFormProps.isEditing ? 'Edit Record' : 'New Accounting Record'}
+                    {recordFormProps.isEditing ? 'Editar Lançamento' : 'Novo Lançamento'}
                 </h2>
 
                 {/* Hidden ID */}
@@ -76,7 +76,7 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
                 {/* Date */}
                 <div>
                     <label htmlFor="date" className="label">
-                        <span className="label-text font-medium">Date (DD/MM/YYYY)</span>
+                        <span className="label-text font-medium"> Data (DD/MM/YYYY)</span>
                     </label>
                     <DatePicker
                         id="date"
@@ -85,7 +85,7 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
                             setDate(date ? format(date, "dd/MM/yyyy") : "")
                         }
                         dateFormat="dd/MM/yyyy"
-                        placeholderText="Select a date"
+                        placeholderText="Selecione uma data"
                         className="input input-bordered w-full"
                     />
                 </div>
@@ -93,7 +93,7 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
                 {/* Description */}
                 <div>
                     <label htmlFor="description" className="label">
-                        <span className="label-text font-medium">Description</span>
+                        <span className="label-text font-medium">Descrição</span>
                     </label>
                     <input
                         type="text"
@@ -108,7 +108,7 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
                 {/* Amount */}
                 <div>
                     <label htmlFor="amount" className="label">
-                        <span className="label-text font-medium">Amount</span>
+                        <span className="label-text font-medium">Valor(R$)</span>
                     </label>
                     <input
                         type="number"
@@ -123,17 +123,20 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
                 {/* Type */}
                 <div>
                     <label htmlFor="type" className="label">
-                        <span className="label-text font-medium">Transaction Type</span>
+                        <span className="label-text font-medium">Tipo de Transação (débito ou crédito)</span>
                     </label>
                     <select
                         id="type"
                         value={type}
-                        onChange={(e) => setType(Number(e.target.value) as TransactionType)}
+                        onChange={(e) => setType(Number(e.target.value))}
                         className="select select-bordered w-full"
                         required
-                    >
-                        <option value={TransactionType.CREDIT}>{TYPE_CREDIT.desc}</option>
-                        <option value={TransactionType.DEBIT}>{TYPE_DEBIT.desc}</option>
+                    >   
+                        <option value={3} disabled>
+                            Selecione o tipo
+                        </option>
+                        <option value={TYPE_CREDIT.value}>{TYPE_CREDIT.desc}</option>
+                        <option value={TYPE_DEBIT.value}>{TYPE_DEBIT.desc}</option>
                     </select>
                 </div>
 
@@ -142,15 +145,15 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
                     {recordFormProps.isEditing ? (
                         <>
                             <button onClick={() => recordFormProps.onCancel()} type="button" className="btn btn-ghost">
-                                Cancel
+                                Cancelar
                             </button>
                             <button onClick={handleSubmit} type="button" className="btn btn-success">
-                                Update
+                                Atualizar
                             </button>
                         </>
                     ) : (
                         <button onClick={handleSubmit} type="button" className="btn btn-neutral w-1/2">
-                            Register
+                            Registrar
                         </button>
                     )}
                 </div>
