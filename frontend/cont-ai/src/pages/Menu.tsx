@@ -7,7 +7,7 @@ export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     return (
-        <div className="bg-white h-screen overflow-hidden">
+        <div className="h-screen overflow-hidden">
             <Navbar />
             <div className="relative isolate px-6 lg:px-8 h-full">
                 <div
@@ -19,16 +19,16 @@ export default function Home() {
                             clipPath:
                                 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
                         }}
-                        className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-gradient-to-tr from-[#4f46e5] to-[#10b981] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
+                        className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30  from-[#4f46e5] to-[#10b981] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
                     />
                 </div>
                 
                 <div className="mx-auto max-w-2xl pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-14">
                     <div className="text-center">
-                        <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+                        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
                             Gestão Financeira Inteligente
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-600">
+                        <p className="mt-6 text-lg leading-8 ">
                             Controle seus lançamentos financeiros de forma organizada por mês, com relatórios detalhados para tomada de decisão estratégica.
                         </p>
                         <div className="mt-8 flex items-center justify-center gap-x-4">
