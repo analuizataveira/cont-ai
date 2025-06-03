@@ -1,21 +1,20 @@
-/* eslint-disable no-unsafe-optional-chaining */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
+ 
 import { useEffect, useState } from "react";
 import Modal from "../../components/Modal";
-import { Record } from "../../interfaces/Record";
-import WarningModal from "../../components/WarningModal";
-import RecordInfo from "./RecordInfo";
-import RecordForm from "./RecordForm";
 import Navbar from "../../components/Navbar";
-import { getAllRecords, getGroupedRecords, getLiteralType, remove } from "../../services/RecordServices";
+import WarningModal from "../../components/WarningModal";
 import { GroupedRecords } from "../../interfaces/GroupedRecords";
+import { Record } from "../../interfaces/Record";
+import { getGroupedRecords, getLiteralType, remove } from "../../services/RecordServices";
+import RecordForm from "./RecordForm";
+import RecordInfo from "./RecordInfo";
 
 export default function RecordList() {
     const [recordInfo, setRecordInfo] = useState<Record>({} as Record);
     const [recordInfoModalOpen, setRecordInfoModalOpen] = useState<boolean>(false);
     const [recordModalOpen, setRecordModalOpen] = useState<boolean>(false);
     const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
-    const [records, setRecords] = useState<Array<Record>>([]);
     const [warningModalAction, setWarningModalAction] = useState<"delete" | "restart" | null>(null);
     const [loading, setLoading] = useState(false);
     const [groupedRecords, setGroupedRecords] = useState<GroupedRecords[]>([]);
