@@ -8,38 +8,36 @@ on:
     branches: [main]
 
 jobs:
-  start-postgres:
+  test-backend:
     runs-on: ubuntu-latest
-    outputs:
-      db-host: localhost
-      db-port: 5432
-    steps:
-      - name: Start Postgres service container
-        uses: addnab/docker-run-action@v3
-        with:
-          image: postgres:15
-          options: >-
-            -e POSTGRES_USER=postgres
-            -e POSTGRES_PASSWORD=postgres
-            -e POSTGRES_DB=contai_db
-            -p 5432:5432
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
-          run: |
-            for i in {1..10}; do
-              pg_isready -h localhost -p 5432 && break
-              echo "Waiting for Postgres..."
-              sleep 5
-            done
 
-  build-api:
-    needs: start-postgres
-    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: contai_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     defaults:
       run:
         working-directory: backend/cont-ai
+
+    env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: contai_db
+      NODE_ENV: test
+
     steps:
       - uses: actions/checkout@v3
 
@@ -57,40 +55,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Start API in background
-        run: npm run dev &
-      
-      # Opcional: upload algum artifact se quiser compartilhar build
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: api-build
-      #     path: backend/cont-ai/dist
-
-  test-api:
-    needs: build-api
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend/cont-ai
-    env:
-      DB_HOST: localhost
-      DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      DB_DATABASE: contai_db
-      NODE_ENV: test
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: backend/cont-ai/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('backend/cont-ai/package.json') }}
+      - name: Wait for Postgres to be ready
+        run: |
+          for i in {1..10}; do
+            pg_isready -h localhost -p 5432 && break
+            echo "Waiting for Postgres..."
+            sleep 5
+          done
 
       - name: Fix permissions on jest binary
         run: chmod -R 755 node_modules/.bin
 
+      - name: Start API in background
+        run: npm run dev &
+      
       - name: Run tests
         run: npx jest --runInBand
 
