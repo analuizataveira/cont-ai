@@ -28,7 +28,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: backend/cont-ai  # Ajuste para o caminho correto do seu package.json
+        working-directory: backend/cont-ai  
 
     env:
       DB_HOST: localhost
@@ -49,8 +49,11 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v3
         with:
-          path: backend/cont-ai/node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('backend/cont-ai/package.json') }}
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Wait for Postgres to be ready
         run: |
@@ -60,23 +63,14 @@ jobs:
             sleep 5
           done
 
-      # --- ETAPA 2: Instalar dependências e subir API ---
-      - name: Install dependencies
-        run: npm install
+      - name: Start API in background
+        run: npm run dev &
 
-      - name: Build the backend (se necessário)
-        run: npm run build
-
-      - name: Start backend server in background
-        run: npm run start &
-
-      # --- ETAPA 3: Executar os testes ---
       - name: Run tests
         run: npm test
 
-      # --- Upload do relatório de testes ---
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: ./backend/cont-ai/src/test-report/report.html
+          path: ./src/test-report/report.html
