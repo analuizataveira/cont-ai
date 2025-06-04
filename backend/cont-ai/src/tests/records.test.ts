@@ -126,7 +126,7 @@ describe("Records Controller (integração)", () => {
     const res = await request(app).delete("/api/records/9999");
 
     expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty("error", "Not found.");
+    expect(res.body).toHaveProperty("error", "Not found");
   });
 
   it("não deve retornar um registro inexistente por ID", async () => {

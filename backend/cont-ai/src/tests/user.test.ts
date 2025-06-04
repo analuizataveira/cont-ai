@@ -20,6 +20,8 @@ beforeEach(async () => {
   await AppDataSource.getRepository(User).clear();
 });
 
+const repo = AppDataSource.getRepository(User);
+
 describe('User Controller (integração)', () => {
   it('deve criar um novo usuário', async () => {
     const res = await request(app).post('/api/create-user').send({
@@ -28,11 +30,10 @@ describe('User Controller (integração)', () => {
     });
 
     expect(res.status).toBe(201);
-    expect(res.body).toHaveProperty('message', 'Usuário criado com sucesso');
+    expect(res.body).toHaveProperty('message', 'User created successfully');
   });
 
   it('não deve permitir criação de usuário com e-mail já existente', async () => {
-    const repo = AppDataSource.getRepository(User);
     await repo.save({
       email: 'ana@example.com',
       password: await bcrypt.hash('senha', 10),
@@ -44,11 +45,10 @@ describe('User Controller (integração)', () => {
     });
 
     expect(res.status).toBe(409);
-    expect(res.body).toHaveProperty('error', 'Usuário já existe');
+    expect(res.body).toHaveProperty('error', 'User already exists');
   });
 
   it('deve autenticar um usuário com credenciais válidas', async () => {
-    const repo = AppDataSource.getRepository(User);
     await repo.save({
       email: 'ana@example.com',
       password: await bcrypt.hash('123456', 10),
@@ -60,7 +60,7 @@ describe('User Controller (integração)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('message', 'Login realizado com sucesso');
+    expect(res.body).toHaveProperty('message', 'Login successful');
     expect(res.body).toHaveProperty('email', 'ana@example.com');
     expect(res.body).toHaveProperty('userId');
   });
@@ -72,11 +72,10 @@ describe('User Controller (integração)', () => {
     });
 
     expect(res.status).toBe(401);
-    expect(res.body).toHaveProperty('error', 'Credenciais inválidas');
+    expect(res.body).toHaveProperty('error', 'Invalid credentials');
   });
 
   it('não deve autenticar com senha incorreta', async () => {
-    const repo = AppDataSource.getRepository(User);
     await repo.save({
       email: 'ana@example.com',
       password: await bcrypt.hash('senha-correta', 10),
@@ -88,6 +87,6 @@ describe('User Controller (integração)', () => {
     });
 
     expect(res.status).toBe(401);
-    expect(res.body).toHaveProperty('error', 'Credenciais inválidas');
+    expect(res.body).toHaveProperty('error', 'Invalid credentials');
   });
 });
