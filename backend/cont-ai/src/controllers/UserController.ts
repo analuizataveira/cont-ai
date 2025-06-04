@@ -43,3 +43,9 @@ export const login = async (req: Request, res: Response) => {
     email: user.email,
   });
 };
+
+
+export const getUsers = async (_: Request, res: Response) => {
+  const users = await repo.find();
+  res.json(users);
+}

@@ -84,9 +84,30 @@ export async function getGroupedRecords(): Promise<GroupedRecords[]> {
 }
 
 
-export function getLiteralType (type: number) {
+export function getLiteralType(type: number) {
 
-    if (type == TYPE_CREDIT.value) return TYPE_CREDIT.desc; 
+    if (type == TYPE_CREDIT.value) return TYPE_CREDIT.desc;
     if (type == TYPE_DEBIT.value) return TYPE_DEBIT.desc;
 
+}
+
+export function validateRecordFields(record: Record): string | null {
+    if (!record.date || record.date.trim() === '') {
+        return 'A data do lançamento é obrigatória.';
+    }
+
+    if (!record.description || record.description.trim() === '') {
+        return 'O nome do lançamento é obrigatório.';
+    }
+
+    if (!record.amount || record.amount <= 0) {
+        return 'O valor do lançamento deve ser um número positivo.';
+    }
+
+    if (record.type !== TYPE_CREDIT.value && record.type !== TYPE_DEBIT.value) {
+        return 'O tipo do lançamento é obrigatório.';
+    }
+
+
+    return null; // no error
 }

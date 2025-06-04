@@ -12,8 +12,8 @@ export default function Navbar() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("session"); // Remove a sessão
-    navigate("/login"); // Redireciona para login
+    localStorage.removeItem("session"); 
+    navigate("/login"); 
   };
 
   const themes = ["light", "dark", "dracula", "corporate", "retro", "valentine", "halloween", "lofi", "black", "winter"];
@@ -34,18 +34,21 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="bg-white mb-2">
-      <nav className="mx-auto flex ml-4 mr-8 max-w items-center justify-between">
+    <header>
+      <nav className="mx-auto flex ml-4 mr-8 items-center justify-between">
         <div className="flex">
-          <img
-            src="/src/assets/Logo1.png"
-            className="h-auto w-32 cursor-pointer hover:opacity-80 transition-opacity"
-            alt="Logo"
+          <button
+            className="border-none bg-transparent cursor-pointer"
             onClick={handleLogoClick}
-          />
+          >
+            <img
+              src="/src/assets/Logo1.png"
+              alt="Logo"
+              className="h-18 w-32 hover:opacity-80 transition-opacity"
+            />
+          </button>
         </div>
         <div className="flex justify-end">
-
           <details className="dropdown">
             <summary className="block text-sm cursor-pointer"><IoColorPaletteOutline size={40} /></summary>
             <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-35 p-2">
