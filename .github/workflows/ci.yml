@@ -35,7 +35,7 @@ jobs:
       DB_PORT: 5432
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      DB_DATABASE: contai_db
+      DB_NAME: contai_db   # Ajustado para bater com o código
       NODE_ENV: test
       DB_SSL: "false"
 
@@ -45,7 +45,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "22"
+          node-version: "18"   # Corrigido para versão existente
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -68,8 +68,8 @@ jobs:
         run: chmod -R 755 node_modules/.bin
 
       - name: Start API in background
-        run: npm run dev &
-      
+        run: nohup npm run dev > backend.log 2>&1 &
+
       - name: Run tests
         run: npx jest --runInBand
 
