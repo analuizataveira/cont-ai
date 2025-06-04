@@ -9,8 +9,7 @@ const app = express();
 
 // Lista de origens permitidas
 const allowedOrigins = [
-  'https://cont-ai-eight.vercel.app',
-  'https://cont-kft7mtb14-ana-luizas-projects-d060f963.vercel.app',
+  'https://cont-ai-front.onrender.com',
   'http://localhost:5173'
 ];
 
