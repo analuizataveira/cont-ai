@@ -2,8 +2,6 @@ import { API_HOST } from "../constants/Api";
 import { GroupedRecords } from "../interfaces/GroupedRecords";
 import { Record, TYPE_CREDIT, TYPE_DEBIT } from "../interfaces/Record";
 
-
-
 // Function to save a new record
 export async function save(record: Record): Promise<Record> {
     const response = await fetch(`${API_HOST}/api/records`, {
@@ -39,12 +37,10 @@ export async function update(record: Record): Promise<Record> {
 // Function to get a record by ID
 export async function getById(recordId: number): Promise<Record> {
     const response = await fetch(`${API_HOST}/api/records/${recordId}`);
-
     if (!response.ok) {
         const error = await response.text();
         throw new Error(JSON.parse(error)?.error);
     }
-
     return await response.json();
 }
 
@@ -59,15 +55,14 @@ export async function remove(recordId: number): Promise<void> {
         throw new Error(JSON.parse(error)?.error);
     }
 }
+
 // Function to get all records
 export async function getAllRecords(): Promise<Array<Record>> {
     const response = await fetch(`${API_HOST}/api/records/`);
-
     if (!response.ok) {
         const error = await response.text();
         throw new Error(JSON.parse(error)?.error);
     }
-
     return await response.json();
 }
 
@@ -83,7 +78,7 @@ export async function getGroupedRecords(): Promise<GroupedRecords[]> {
     return await response.json();
 }
 
-
+// Function to get the literal type description based on the type value
 export function getLiteralType(type: number) {
 
     if (type == TYPE_CREDIT.value) return TYPE_CREDIT.desc;
@@ -91,13 +86,14 @@ export function getLiteralType(type: number) {
 
 }
 
+// Function to validate record fields
 export function validateRecordFields(record: Record): string | null {
     if (!record.date || record.date.trim() === '') {
         return 'A data do lançamento é obrigatória.';
     }
 
     if (!record.description || record.description.trim() === '') {
-        return 'O nome do lançamento é obrigatório.';
+        return 'A descrição do lançamento é obrigatória .';
     }
 
     if (!record.amount || record.amount <= 0) {
@@ -107,7 +103,6 @@ export function validateRecordFields(record: Record): string | null {
     if (record.type !== TYPE_CREDIT.value && record.type !== TYPE_DEBIT.value) {
         return 'O tipo do lançamento é obrigatório.';
     }
-
 
     return null; // no error
 }

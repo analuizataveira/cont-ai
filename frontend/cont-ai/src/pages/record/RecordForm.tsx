@@ -18,11 +18,11 @@ type RecordFormProps = {
 }
 
 const RecordForm = (recordFormProps: RecordFormProps) => {
-    const [id, setId] = useState<number | null>(null);
-    const [date, setDate] = useState('');
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
-    const [type, setType] = useState<number>(0);
+    const [id, setId] = useState<number | null>(null); // Record ID, null for new records
+    const [date, setDate] = useState(''); // Date in DD/MM/YYYY format, empty for new records
+    const [description, setDescription] = useState(''); // Description of the record, empty for new records
+    const [amount, setAmount] = useState(''); // Amount as a string, empty for new records
+    const [type, setType] = useState<number>(0); // Type of transaction, default to 0 (not selected)
 
     const [showErrorMessage, setShowErrorMessage] = useState('');
 
@@ -35,8 +35,6 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
             type: type,
         } as Record;
 
-        console.log('Record antes da validação:', record);
-
         const validationError = validateRecordFields(record);
         if (validationError) {
             setShowErrorMessage(validationError);
@@ -47,7 +45,7 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
 
         try {
             if (!record.id) {
-                await save(record);
+                await save(record); // Await: Ensure the record is saved before proceeding
                 recordFormProps.onSubmit();
             } else {
                 await update(record);
@@ -71,8 +69,8 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
         }
 
         if (recordFormProps.isEditing) {
-            loadRecord();
-        } else if (!recordFormProps.isEditing || recordFormProps.isClose) {
+            loadRecord(); // If editing, load the record data
+        } else if (!recordFormProps.isEditing || recordFormProps.isClose) { // If not editing or form is closed, reset the form
             setId(null);
             setDate('');
             setDescription('');
@@ -80,7 +78,7 @@ const RecordForm = (recordFormProps: RecordFormProps) => {
             setType(3);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [recordFormProps.isClose]);
+    }, [recordFormProps.isClose]); // Reset form when isClose changes
 
     return (
         <div className="w-full">

@@ -3,49 +3,63 @@ import { AppDataSource } from "../database/data-source";
 import { User } from "../entities/User";
 import * as bcrypt from "bcrypt";
 
+// Get the User repository from the database connection
 const repo = AppDataSource.getRepository(User);
 
-export const createUser = async (req: Request, res: Response) => {
+// Function to create new user with email and hashed password
+export async function  createUser (req: Request, res: Response) {
+  // Extract email and password from request body
   const { email, password } = req.body;
-  const repo = AppDataSource.getRepository(User);
-
+  // Check if user with this email already exists
   const existingUser = await repo.findOne({ where: { email } });
   if (existingUser) {
-    return res.status(409).json({ error: "Usuário já existe" });
+    return res.status(409).json({ error: "User already exists" });
   }
 
+  // Hash the password with bcrypt (10 salt rounds)
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+  // Create and save new user with hashed password
   const user = repo.create({ email, password: hashedPassword });
   await repo.save(user);
 
-  res.status(201).json({ message: "Usuário criado com sucesso" });
+  // Return success response
+  res.status(201).json({ message: "User created successfully" });
 };
 
-export const login = async (req: Request, res: Response) => {
+// Function to handle user login
+export async function login (req: Request, res: Response) {
+  // Extract email and password from request body
   const { email, password } = req.body;
 
+  // Find user by email
   const user = await repo.findOne({ where: { email } });
 
+  // If user doesn't exist, return error
   if (!user) {
-    return res.status(401).json({ error: "Credenciais inválidas" });
+    return res.status(401).json({ error: "Invalid credentials" });
   }
 
+  // Compare provided password with stored hashed password
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    return res.status(401).json({ error: "Credenciais inválidas" });
+    return res.status(401).json({ error: "Invalid credentials" });
   }
 
+  // Return success response with user details
   res.status(200).json({
-    message: "Login realizado com sucesso",
+    message: "Login successful",
     userId: user.id,
     email: user.email,
   });
 };
 
-
-export const getUsers = async (_: Request, res: Response) => {
+// Function to get all users from the database
+export async function getUsers (_: Request, res: Response) {
+  // Find all users in database
   const users = await repo.find();
+  
+  // Return users as JSON response
   res.json(users);
 }

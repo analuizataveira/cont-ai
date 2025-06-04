@@ -1,5 +1,3 @@
- 
- 
 import { useEffect, useState } from "react";
 import Modal from "../../components/Modal";
 import Navbar from "../../components/Navbar";
@@ -11,24 +9,25 @@ import RecordForm from "./RecordForm";
 import RecordInfo from "./RecordInfo";
 
 export default function RecordList() {
-    const [recordInfo, setRecordInfo] = useState<Record>({} as Record);
-    const [recordInfoModalOpen, setRecordInfoModalOpen] = useState<boolean>(false);
-    const [recordModalOpen, setRecordModalOpen] = useState<boolean>(false);
-    const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
-    const [warningModalAction, setWarningModalAction] = useState<"delete" | "restart" | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [groupedRecords, setGroupedRecords] = useState<GroupedRecords[]>([]);
 
+    const [recordInfo, setRecordInfo] = useState<Record>({} as Record); // For editing
+    const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);  // Record selected for details
+    const [groupedRecords, setGroupedRecords] = useState<GroupedRecords[]>([]); // Grouped records by month and year
+
+    const [loading, setLoading] = useState(false); // Visual loading spinning
+
+    const [warningModalAction, setWarningModalAction] = useState<"delete" | null>(null); // Action for warning modal
+    const [recordInfoModalOpen, setRecordInfoModalOpen] = useState<boolean>(false); // Show or hidde modal info
+    const [recordModalOpen, setRecordModalOpen] = useState<boolean>(false); // Show or hidde modal form
 
 
     const refreshRecords = async () => {
         setLoading(true);
         await getGroupedRecords().then((groupedRecords) => {
             setGroupedRecords(groupedRecords != null ? groupedRecords : []);
-            setTimeout(() => setLoading(false), 100);
+            setTimeout(() => setLoading(false), 1000);
         });
     };
-
 
     useEffect(() => {
         refreshRecords();
@@ -66,7 +65,7 @@ export default function RecordList() {
             <Navbar />
             <div className="h-full px-12 py-8">
                 <div className="flex justify-between space-x-2 mb-4">
-                    <h1 className="text-4xl font-bold text-left"> Lançamentos financeiros</h1>
+                    <h1 className="text-4xl font-bold text-left"> Registros financeiros</h1>
                     <div>
                         <button
                             onClick={() => openForm({} as Record)}
@@ -103,7 +102,6 @@ export default function RecordList() {
                                         <p className="text-sm text-gray-500 mb-4">
                                             Total Crédito: R${group.totalCredit} | Total Débito: R${group.totalDebit}
                                         </p>
-
                                         <table className="table table-fixed w-full shadow-sm" >
                                             <thead className="text-md bg-base-200">
                                                 <tr>
