@@ -37,6 +37,7 @@ jobs:
       DB_PASSWORD: postgres
       DB_DATABASE: contai_db
       NODE_ENV: test
+      DB_SSL: "false"
 
     steps:
       - uses: actions/checkout@v3

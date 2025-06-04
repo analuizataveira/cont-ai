@@ -15,6 +15,6 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME ,
   synchronize: true, // Automatically creates/updates database tables to match entities
   logging: false, // Disables SQL query logging
-  ssl: true, // Enables SSL for database connections
+  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
   entities: [Record, User], // Database tables
 });
