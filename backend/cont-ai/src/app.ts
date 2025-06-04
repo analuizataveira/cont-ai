@@ -9,7 +9,7 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: ['https://cont-kft7mtb14-ana-luizas-projects-d060f963.vercel.app', 'httsp://localhost:5173']
+  origin: ['https://cont-kft7mtb14-ana-luizas-projects-d060f963.vercel.app', 'https://cont-ai-eight.vercel.app', 'httsp://localhost:5173']
 }));
 
 app.use(bodyParser.json());
