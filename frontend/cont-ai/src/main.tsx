@@ -21,7 +21,7 @@ createRoot(document.getElementById('root')!).render(
           } />
         <Route path="/create-user" element={<UserForm />} />
 
-        <Route path="/record-list" element={
+        <Route path="/record/RecordList" element={
           <ProtectedRoute>
           <RecordList />
           </ProtectedRoute>
