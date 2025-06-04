@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { IoColorPaletteOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/Logo1.png';
+
 
 export default function Navbar() {
   const [theme, setTheme] = useState('light');
@@ -12,8 +14,8 @@ export default function Navbar() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("session"); 
-    navigate("/login"); 
+    localStorage.removeItem("session");
+    navigate("/login");
   };
 
   const themes = ["light", "dark", "dracula", "corporate", "retro", "valentine", "halloween", "lofi", "black", "winter"];
@@ -42,7 +44,7 @@ export default function Navbar() {
             onClick={handleLogoClick}
           >
             <img
-              src="/src/assets/Logo1.png"
+              src={logo}
               alt="Logo"
               className="h-18 w-32 hover:opacity-80 transition-opacity"
             />
