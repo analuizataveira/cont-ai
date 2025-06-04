@@ -7,15 +7,21 @@ import userRoutes from "./routes/userRoutes";
 
 const app = express();
 
-// CORS configuration
+const allowedOrigins = [
+  'https://cont-ai-eight.vercel.app',
+  'http://localhost:5173'
+];
+
 app.use(cors({
-  origin: ['https://cont-kft7mtb14-ana-luizas-projects-d060f963.vercel.app', 'https://cont-ai-eight.vercel.app', 'httsp://localhost:5173']
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// Middleware para parsear JSON
 app.use(bodyParser.json());
 app.use(express.json());
 
+// Rotas
 app.use("/api", recordRoutes); 
-app.use("/api", userRoutes);   
-
-export default app;
+app.use("/api", userRoutes);
