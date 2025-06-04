@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import './index.css'
 import Menu from './pages/Menu.tsx'
 import RecordList from './pages/record/RecordList.tsx';
@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
@@ -27,6 +27,6 @@ createRoot(document.getElementById('root')!).render(
           </ProtectedRoute>
           } />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 )
