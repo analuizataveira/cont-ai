@@ -1,5 +1,6 @@
 'use client'
 
+import { Link } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import { useState } from "react"
 
@@ -22,7 +23,7 @@ export default function Home() {
                         className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30  from-[#4f46e5] to-[#10b981] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
                     />
                 </div>
-                
+
                 <div className="mx-auto max-w-2xl pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-14">
                     <div className="text-center">
                         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -32,14 +33,14 @@ export default function Home() {
                             Controle seus lançamentos financeiros de forma organizada por mês, com relatórios detalhados para tomada de decisão estratégica.
                         </p>
                         <div className="mt-8 flex items-center justify-center gap-x-4">
-                            <a
-                                href="/record-list"
+                            <Link
+                                to="/record-list"
                                 className="rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Registros
-                            </a>
-                            <button 
-                                onClick={() => setIsModalOpen(true)} 
+                            </Link>
+                            <button
+                                onClick={() => setIsModalOpen(true)}
                                 className="text-sm font-semibold text-gray-900 hover:text-indigo-600 transition-colors"
                             >
                                 Saiba mais <span aria-hidden="true">→</span>
@@ -77,7 +78,7 @@ export default function Home() {
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-2xl font-bold text-gray-900">Como usar o sistema</h3>
-                                    <button 
+                                    <button
                                         onClick={() => setIsModalOpen(false)}
                                         className="text-gray-500 hover:text-gray-700"
                                     >
@@ -86,7 +87,7 @@ export default function Home() {
                                         </svg>
                                     </button>
                                 </div>
-                                
+
                                 <div className="space-y-6">
                                     <div className="border-l-4 border-indigo-500 pl-4 py-2">
                                         <h4 className="font-semibold text-lg">1. Cadastro e Login</h4>
@@ -94,28 +95,28 @@ export default function Home() {
                                             Primeiro, crie sua conta ou faça login se já tiver uma. Seus dados serão armazenados com segurança.
                                         </p>
                                     </div>
-                                    
+
                                     <div className="border-l-4 border-indigo-500 pl-4 py-2">
                                         <h4 className="font-semibold text-lg">2. Adicionar Lançamentos</h4>
                                         <p className="mt-1 text-gray-600">
                                             Na página de Registros, você pode adicionar novos lançamentos financeiros, classificando-os como receitas ou despesas.
                                         </p>
                                     </div>
-                                    
+
                                     <div className="border-l-4 border-indigo-500 pl-4 py-2">
                                         <h4 className="font-semibold text-lg">3. Visualização Mensal</h4>
                                         <p className="mt-1 text-gray-600">
                                             Seus lançamentos são automaticamente organizados por mês, facilitando o acompanhamento do seu fluxo financeiro.
                                         </p>
                                     </div>
-                                    
+
                                     <div className="border-l-4 border-indigo-500 pl-4 py-2">
                                         <h4 className="font-semibold text-lg">4. Relatórios</h4>
                                         <p className="mt-1 text-gray-600">
                                             Acesse relatórios detalhados que mostram seus gastos por categoria, comparação entre meses e projeções futuras.
                                         </p>
                                     </div>
-                                    
+
                                     <div className="border-l-4 border-indigo-500 pl-4 py-2">
                                         <h4 className="font-semibold text-lg">5. Tomada de Decisão</h4>
                                         <p className="mt-1 text-gray-600">
@@ -123,7 +124,7 @@ export default function Home() {
                                         </p>
                                     </div>
                                 </div>
-                                
+
                                 <div className="mt-8 flex justify-end">
                                     <button
                                         onClick={() => setIsModalOpen(false)}
