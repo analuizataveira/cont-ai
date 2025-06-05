@@ -85,7 +85,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
       },
     },
   },
-  apis: ["./src/swagger/paths/*.ts"], // caminhos dos seus comentários JSDoc
+  apis: ["./src/swagger/paths/*.ts"], 
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

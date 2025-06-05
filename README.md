@@ -1,79 +1,92 @@
-# 📊 ContAI - Financial Records Manager
+# 📊 ContAI - Gerenciador de Lançamentos Financeiros
 
-Este projeto é uma aplicação **Fullstack** desenvolvida como parte de um desafio técnico da **Scoder Tech Studio**. A aplicação permite o **cadastro e visualização de lançamentos financeiros**, organizados por mês e ano, para a empresa **ContAI**.
-
-## 🚀 Funcionalidades
-
-- **Cadastro de lançamentos financeiros**:
-    - Data (DD/MM/AAAA)
-    - Descrição
-    - Valor (positivo)
-    - Tipo (Crédito/Débito)
-- **Visualização dos lançamentos**:
-    - Tabela por mês e ano
-    - Totais mensais de créditos e débitos
-
-## 🛠️ Tecnologias Utilizadas
-
-- **Frontend:** React, TypeScript
-- **Backend:** Node.js, Express, TypeScript, TypeORM, PostgreSQL
-- **Testes:** Jest (`npm test`)
+**ContAI** é uma aplicação **Fullstack** desenvolvida para o desafio técnico da **Scoder Tech Studio**. O sistema permite o cadastro, consulta e organização de lançamentos financeiros por mês e ano, facilitando o controle financeiro de contabilidade.
 
 ---
 
-## 🧑‍💻 Como Rodar o Projeto
+## 🏗️ Arquitetura do Projeto
 
-### 🔧 Requisitos
+O projeto segue uma arquitetura em camadas, separando responsabilidades entre frontend e backend:
+
+- **Frontend:** Aplicação React com TypeScript, responsável pela interface do usuário e comunicação com a API.
+- **Backend:** API RESTful construída com Node.js, Express e TypeScript, utilizando TypeORM para acesso ao banco de dados PostgreSQL.
+- **Testes:** Implementados com Jest para garantir a qualidade do código.
+- **CI/CD:** Pipeline automatizado via GitHub Actions para build, testes e deploy contínuo.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Linguagens:** TypeScript (frontend e backend), SQL (PostgreSQL)
+- **Frontend:** React, TypeScript
+- **Backend:** Node.js, Express, TypeORM, PostgreSQL
+- **Testes:** Jest
+- **DevOps:** Docker, GitHub Actions
+
+---
+
+## 🚀 Funcionalidades
+
+- Cadastro de lançamentos financeiros (data, descrição, valor, tipo)
+- Visualização de lançamentos filtrados por mês e ano
+- Totais mensais de créditos e débitos
+
+---
+
+## 📚 Documentação da API
+
+A documentação interativa da API está disponível via Swagger:
+
+[https://cont-ai-back.onrender.com/api-docs](https://cont-ai-back.onrender.com/api/docs)
+
+---
+
+## 🧑‍💻 Como Executar o Projeto
+
+### Pré-requisitos
 
 - Node.js 18+
 - npm (ou yarn)
 - Docker
 
-### 🔁 Clonando o repositório
+### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/analuizataveira/contai.git
 cd contai
 ```
 
-### ⚙️ Configuração do Backend
-
-Acesse a pasta do backend e instale as dependências:
+### 2. Configuração do Backend
 
 ```bash
 cd backend/cont-ai
 npm install
-```
-
-Inicie o servidor:
-
-```bash
 npm run dev
 ```
 
-### 💻 Configuração do Frontend
-
-Acesse a pasta do frontend e instale as dependências:
+### 3. Configuração do Frontend
 
 ```bash
-cd frontend/cont-ai
+cd ../../frontend/cont-ai
 npm install
-```
-
-Inicie a aplicação localmente:
-
-```bash
 npm run dev
 ```
 
-Ou, se preferir, acesse a versão online do frontend em:  
+Ou acesse a versão online do frontend:  
 [https://cont-ai-front.onrender.com](https://cont-ai-front.onrender.com)
 
-### 🧪 Executando os Testes
+---
 
-Acesse a pasta do backend e execute:
+### 4. Executando os Testes
+
+Para rodar os testes automatizados do backend:
 
 ```bash
 cd backend/cont-ai
 npm test
 ```
+
+
+## 🤝 Contato
+
+Dúvidas ou sugestões? Entre em contato pelo [LinkedIn](https://www.linkedin.com/in/analuizataveira/).
