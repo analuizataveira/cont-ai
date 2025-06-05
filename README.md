@@ -26,11 +26,10 @@ Este projeto é uma aplicação **Fullstack** desenvolvida como parte de um desa
 ### 🔧 Requisitos
 
 - Node.js 18+
-- PostgreSQL
 - npm (ou yarn)
-- Docker 
+- Docker
 
-### 🔁 Clonar o repositório
+### 🔁 Clonando o repositório
 
 ```bash
 git clone https://github.com/analuizataveira/contai.git
@@ -38,50 +37,43 @@ cd contai
 ```
 
 ### ⚙️ Configuração do Backend
-Acesse a pasta do backend:
+
+Acesse a pasta do backend e instale as dependências:
 
 ```bash
 cd backend/cont-ai
-```
-
-#### Instale as dependências:
-
-```bash
 npm install
 ```
 
-#### Inicie o servidor:
+Inicie o servidor:
 
 ```bash
 npm run dev
 ```
 
-###  💻 Configuração do Frontend
-    Acesse a pasta do frontend:
+### 💻 Configuração do Frontend
+
+Acesse a pasta do frontend e instale as dependências:
 
 ```bash
 cd frontend/cont-ai
-```
-#### Instale as dependências:
-
-```bash
 npm install
 ```
 
-#### Inicie a aplicação:
+Inicie a aplicação localmente:
+
 ```bash
 npm run dev
 ```
 
+Ou, se preferir, acesse a versão online do frontend em:  
+[https://cont-ai-front.onrender.com](https://cont-ai-front.onrender.com)
+
 ### 🧪 Executando os Testes
-    Acesse a pasta do backend:
+
+Acesse a pasta do backend e execute:
 
 ```bash
 cd backend/cont-ai
-```
-
-#### Execute os testes com:
-
-```bash
 npm test
 ```
