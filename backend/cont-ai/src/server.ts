@@ -3,7 +3,6 @@ import { AppDataSource } from "./database/data-source";
 import "reflect-metadata";
 import app from "./app";
 
-
 if (process.env.NODE_ENV === "test") {
   dotenv.config({ path: ".env.test" });
 } else {

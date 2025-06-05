@@ -1,31 +1,34 @@
 import express from "express";
 import cors from "cors";
 import "reflect-metadata";
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
 import recordRoutes from "./routes/recordRoutes";
-import userRoutes from "./routes/userRoutes"; 
+import userRoutes from "./routes/userRoutes";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "./swagger/swager-config";
 
 const app = express();
 
-// Lista de origens permitidas
 const allowedOrigins = [
-  'https://cont-ai-front.onrender.com',
-  'http://localhost:5173'
+  "https://cont-ai-front.onrender.com",
+  "http://localhost:5173",
 ];
 
-// Configuração CORS sem credenciais
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-// Middleware para parsear JSON
 app.use(bodyParser.json());
 app.use(express.json());
 
 // Rotas
-app.use("/api", recordRoutes); 
+app.use("/api", recordRoutes);
 app.use("/api", userRoutes);
+
+swaggerDocs(app);
 
 export default app;
