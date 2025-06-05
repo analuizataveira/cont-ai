@@ -4,8 +4,7 @@ import "reflect-metadata";
 import bodyParser from "body-parser";
 import recordRoutes from "./routes/recordRoutes";
 import userRoutes from "./routes/userRoutes";
-import swaggerUi from "swagger-ui-express";
-import swaggerDocs from "./swagger/swager-config";
+
 
 const app = express();
 
@@ -29,6 +28,5 @@ app.use(express.json());
 app.use("/api", recordRoutes);
 app.use("/api", userRoutes);
 
-swaggerDocs(app);
 
 export default app;

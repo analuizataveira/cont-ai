@@ -1,7 +1,7 @@
+import { format, parse } from "date-fns";
 import { Request, Response } from "express"; // use for dealing with HTTP requests and responses
 import { AppDataSource } from "../database/data-source";
 import { Record, TransactionType } from "../entities/Records";
-import { parse, format, isValid } from "date-fns";
 
 // TypeORM repository for the Record entity, get the repository from the database connection
 const repo = AppDataSource.getRepository(Record);
@@ -25,8 +25,19 @@ export async function getAllRecords(_: Request, res: Response) {
 
 // Function to get a record by its ID
 export async function getRecordById(req: Request, res: Response) {
-  const record = await repo.findOneBy({ id: Number(req.params.id) });
-  record ? res.json(record) : res.status(404).json({ error: "Not found." });
+  const id = Number(req.params.id);
+
+  if (isNaN(id)) {
+    // Se não for número, retorne erro 400 (bad request)
+    return res.status(400).json({ error: "ID inválido." });
+  }
+
+  const record = await repo.findOneBy({ id });
+  if (record) {
+    res.json(record);
+  } else {
+    res.status(404).json({ error: "Not found." });
+  }
 }
 
 // Function to update a record by its ID

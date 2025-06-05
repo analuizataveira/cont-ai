@@ -70,11 +70,11 @@ export default function UserForm() {
                 value={user.email}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md px-3.5 py-2 text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600"
+                className="block w-full rounded-md px-3.5 py-2 text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 bg-white"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-900">
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-900 ">
                 Senha (mínimo 6 caracteres)
               </label>
               <input
@@ -85,7 +85,7 @@ export default function UserForm() {
                 onChange={handleChange}
                 required
                 minLength={6}
-                className="block w-full rounded-md px-3.5 py-2 text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600"
+                className="block w-full rounded-md px-3.5 py-2 text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 bg-white"
               />
             </div>
           </div>

@@ -22,9 +22,9 @@
  *           type: number
  *           example: 100.5
  *         type:
- *           type: string
- *           enum: [CREDIT, DEBIT]
- *           example: DEBIT
+ *           type: number
+ *           enum: [Credit, Debit]
+ *           example: 0
  *         description:
  *           type: string
  *           example: Compra mercado
@@ -130,7 +130,7 @@
  *       404:
  *         description: Registro não encontrado
  *
- * /records/grouped:
+ * /records/grouped/by-month:
  *   get:
  *     summary: Registros agrupados por mês/ano com totais de crédito e débito
  *     tags: [Records]

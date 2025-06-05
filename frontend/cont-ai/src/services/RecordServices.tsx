@@ -1,6 +1,9 @@
-import { API_HOST } from "../constants/Api";
 import { GroupedRecords } from "../interfaces/GroupedRecords";
 import { Record, TYPE_CREDIT, TYPE_DEBIT } from "../interfaces/Record";
+
+const API_HOST = import.meta.env.VITE_API_HOST;
+
+console.log("API_HOST:", API_HOST);
 
 // Function to save a new record
 export async function save(record: Record): Promise<Record> {

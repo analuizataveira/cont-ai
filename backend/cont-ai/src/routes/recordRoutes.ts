@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/records", createRecord);
 router.get("/records", getAllRecords);
-router.get("/records/:id", getRecordById);
+router.get("/records/:id", getRecordById as RequestHandler); ;
 router.put("/records/:id", updateRecord as RequestHandler);
 router.delete("/records/:id", deleteRecord);
 router.get("/records/grouped/by-month", getGroupedRecords)

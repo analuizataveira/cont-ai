@@ -2,9 +2,17 @@ services:
   postgres:
     image: postgres
     restart: always
+    env_file: 
+      - .env.test
     environment:
       POSTGRES_USER: ${DB_TEST_USERNAME}
       POSTGRES_PASSWORD: ${DB_TEST_PASSWORD}
       POSTGRES_DB: ${DB_TEST_NAME}
     ports:
-      - "${DB__TEST_PORT}:5432"
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Adiciona volume para persistência
+
+volumes:
+  postgres_data:

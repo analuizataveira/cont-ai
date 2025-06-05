@@ -1,7 +1,11 @@
-import { API_HOST } from "../constants/Api";
 import { User } from "../interfaces/User";
 
+
+const API_HOST = import.meta.env.VITE_API_HOST;
+
 export async function userLogin (email: string, password: string) {
+
+    console.log("API_HOST:", API_HOST);
     const response = await fetch(`${API_HOST}/api/login`, {
         method: 'POST',
         headers: {
