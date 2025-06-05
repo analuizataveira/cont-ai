@@ -37,7 +37,7 @@ O projeto segue uma arquitetura em camadas, separando responsabilidades entre fr
 
 A documentação interativa da API está disponível via Swagger:
 
-[https://cont-ai-back.onrender.com/api-docs](https://cont-ai-back.onrender.com/api/docs)
+[https://cont-ai.onrender.com/docs](https://cont-ai.onrender.com/docs)
 
 ---
 
