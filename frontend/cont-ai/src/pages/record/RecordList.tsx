@@ -63,8 +63,8 @@ export default function RecordList() {
     return (
         <div className="h-screen">
             <Navbar />
-            <div className="h-full px-12 py-8">
-                <div className="flex justify-between space-x-2 mb-4">
+            <div className="h-full px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
                     <h1 className="text-4xl font-bold text-left"> Registros financeiros</h1>
                     <div>
                         <button
@@ -102,6 +102,7 @@ export default function RecordList() {
                                         <p className="text-sm text-gray-500 mb-4">
                                             Total Crédito: R${group.totalCredit} | Total Débito: R${group.totalDebit}
                                         </p>
+                                        <div className="overflow-x-auto">
                                         <table className="table table-fixed w-full shadow-sm" >
                                             <thead className="text-md bg-base-200">
                                                 <tr>
@@ -126,6 +127,7 @@ export default function RecordList() {
                                                 ))}
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
