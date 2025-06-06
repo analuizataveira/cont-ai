@@ -44,9 +44,9 @@ export default function UserForm() {
 
   return (
     <div>
-      <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <div className="isolate px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+          <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
             Criar Usuário
           </h2>
         </div>
@@ -60,7 +60,7 @@ export default function UserForm() {
         <form onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20">
           <div className="grid grid-cols-1 gap-x-8 gap-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-900">
+              <label htmlFor="email" className="block text-sm font-semibold">
                 E-mail
               </label>
               <input
@@ -70,12 +70,12 @@ export default function UserForm() {
                 value={user.email}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md px-3.5 py-2 text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 bg-white"
+                className="block w-full rounded-md px-3.5 py-2 outline outline-1 outline-gray-300  focus:outline-indigo-600"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-900 ">
-                Senha (mínimo 6 caracteres)
+              <label htmlFor="password" className="block text-sm font-semibold  ">
+                Senha
               </label>
               <input
                 id="password"
@@ -85,7 +85,7 @@ export default function UserForm() {
                 onChange={handleChange}
                 required
                 minLength={6}
-                className="block w-full rounded-md px-3.5 py-2 text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 bg-white"
+                className="block w-full rounded-md px-3.5 py-2 outline outline-1 outline-gray-300  focus:outline-indigo-600 "
               />
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function UserForm() {
             <button
               type="button"
               onClick={() => navigate('/login')}
-              className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+              className="text-sm font-semibold hover:text-indigo-500"
             >
               Já tem uma conta? Faça login
             </button>
